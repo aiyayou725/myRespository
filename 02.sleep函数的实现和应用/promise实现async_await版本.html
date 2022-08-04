@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Promise实现sleep——async_await版本</title>
+</head>
+<body>
+  <script>
+    // 使用睡眠函数实现红绿灯代码，红灯2秒，黄灯1秒，绿灯3秒，循环改变颜色。
+    // 一开始是红灯，两秒后变为黄灯，再过一秒变绿灯，绿灯持续3秒变红灯...
+    function sleepPromise(delay){
+      return new Promise(resolve => {
+        setTimeout(resolve, delay)
+      }) 
+    }
+    async function changeColor(color, delay) {
+      console.log(`现在是${color}`);
+      await sleepPromise(delay)
+    }
+
+    async function main(){
+      while(true) {
+        await changeColor('红灯',2000)
+        await changeColor('黄灯',1000)
+        await changeColor('绿灯',3000)
+      }
+    }
+    main()
+    
+  </script>
+  
+</body>
+</html>

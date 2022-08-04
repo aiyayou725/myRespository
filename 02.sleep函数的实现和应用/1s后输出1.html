@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>1s后输出1,2s后输出2...</title>
+</head>
+<body>
+  <script>
+  // 一开始输出0，1s后输出1,2s后输出2...
+  // function sleep(delay) {
+  //   return new Promise(resolve => {
+  //     setTimeout(resolve, delay)
+  //   })
+  // }
+
+  // async function outPutNum(){
+  //   console.log(0);
+  //   await sleep(1000)
+  //   console.log(1);
+  //   await sleep(2000)
+  //   console.log(2);
+  //   await sleep(3000)
+  //   console.log(3); 
+  // }
+  // outPutNum()
+
+
+  function logNum(num){
+    return new Promise(resolve=>{
+      setTimeout(() => {
+        console.log(num)
+        resolve()
+      }, 1000)
+    })
+  }
+
+  logNum(1).then(() => logNum(2))
+           .then(() => logNum(3))
+
+  </script>
+
+  
+</body>
+</html>

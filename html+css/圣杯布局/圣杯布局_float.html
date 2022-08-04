@@ -1,0 +1,69 @@
+<!-- 圣杯布局要求 -->
+<!-- header和footer各自占领屏幕所有宽度，高度固定。
+中间的container是一个三栏布局。
+三栏布局两侧宽度固定不变，中间部分自动填充整个区域。
+中间部分的高度是三栏中最高的区域的高度。 -->
+
+<!-- 最重要的是圣杯布局要求三栏中的中间栏 center 优先渲染，意思就是center盒子要放在 left 和 right 之前 -->
+
+<!-- body 不设置最小宽度会当浏览器宽度缩小到一定程度时布局会错乱 -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+    }
+    body {
+      min-width: 700px;
+    }
+    header, footer {
+      height: 70px;
+      background-color: rgb(165, 163, 163);
+    }
+    .container {
+      padding: 0 200px;
+      height: 300px;
+    }
+    .left, .right {
+      float: left;
+      width: 200px;
+      height: 200px;
+    }
+    .left {
+      position: relative;
+      left: -200px;
+      /* margin 设为百分数，最终计算的宽度是相对父元素宽度的，父元素是 container 宽度是浏览器宽度*/
+      margin-left: -100%;
+      background-color: rgb(251, 144, 144);
+    }
+    .right {
+      position: relative;
+      right: -200px;
+      margin-left: -200px;
+      background-color: rgb(169, 251, 122);
+    }
+    .center {
+      float: left;
+      width: 100%;
+      height: 300px;
+      background-color: rgb(139, 224, 247);
+    }
+  </style>
+</head>
+<body>
+  <header></header>
+  <div class="container">
+    <div class="center">center</div>
+    <div class="left">left</div>
+    <div class="right">right</div>
+  </div>
+  <footer></footer>
+  
+</body>
+</html>

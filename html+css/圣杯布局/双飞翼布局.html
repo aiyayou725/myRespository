@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+    }
+    header, footer {
+      width: 100%;
+      height: 60px;
+      background-color: rgb(178, 174, 174);
+    }
+    .container {
+      height: 300px;
+    }
+    .left {
+      float: left;
+      margin-left: -100%;
+      width: 200px;
+      height: 200px;
+      background-color: rgb(244, 139, 139);
+    }
+    .right {
+      float: left;
+      margin-left: -200px;
+      width: 200px;
+      height: 200px;
+      background-color: rgb(116, 203, 240);
+    }
+    .wrapper {
+      float: left;
+      width: 100%;
+      height: 300px;
+      background-color: rgb(207, 248, 142);
+    }
+    .center {
+      margin: 0 200px;
+      width: 100%;
+      height: 300px;
+    }
+  </style>
+</head>
+<body>
+  <header>头部</header>
+  <div class="container">
+    <div class="wrapper">
+      <div class="center">中间</div>
+    </div>
+    <div class="left">左边</div>
+    <div class="right">右边</div>
+  </div>
+  <footer>尾部</footer>
+  
+</body>
+</html>

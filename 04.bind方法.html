@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>myBind</title>
+</head>
+<body>
+  <script>
+    // bind 方法传入一个对象，返回一个 this 绑定了传入对象的新函数
+    // 如果 new 一个 bind 绑定后的函数，传入的指定的 this 会失效
+    var value = 2;
+    var foo = { value: 1 };
+    function bar(name, age) {
+        this.habit = 'shopping';
+        console.log(this.value);
+        console.log(name);
+        console.log(age);
+    }
+    bar.prototype.friend = 'kevin';
+    var bindFoo = bar.bind(foo, 'daisy');
+    var obj2 = new bindFoo('18');  // new 一个实例对象时，会执行构造函数
+    /**
+     * 执行构造函数的结果
+       * 全局和 foo 都绑定了 value 但 console.log(this.value) 打印的值是 undefined 
+         原因是 new 创建了一个新对象，this 指向这个新对象 obj
+       * console.log(name) 打印的结果是传入的参数 'daisy'
+       * console.log(age) 打印的结果是传入的参数 18
+     * 执行下面两行的结果
+       * new 的时候 this 已经指向了 obj 所以执行构造函数的时候 this.habit = 'shopping' 会给 obj 添加一个属性，值为 'shopping'
+       * 当 new 一个 bind 返回的函数时，bind绑定的 this 会失效（只会传入参数），所以创建的还是 bar 的实例，
+         根据原型链，找到 构造函数bar 的原型对象的属性 friend 值为 'kevin'
+    **/ 
+    // undefined
+    // daisy
+    // 18
+    // shopping
+    // kevin
+    console.log(obj2.habit);  
+    console.log(obj2.friend);
+
+    Function.prototype.mybind = function (context) {
+      let self = this;
+      let args = Array.prototype.slice.call(arguments, 1);
+      // 定义一个空函数，用来做中间层，可以在 new 的时候改变实例的原型对象
+      // 避免绑定函数的 prototype 属性被修改
+      let fNOP = function () {};
+      let fBound = function () {
+          let bindArgs = Array.prototype.slice.call(arguments)
+          return self.apply(this instanceof fNOP ? this : context, args.concat(bindArgs));
+      }
+      fNOP.prototype = this.prototype;
+      fBound.prototype = new fNOP();
+      return fBound;
+    }
+
+
+    function text(a, b, c) {
+      console.log(a, b, c)
+      console.log(this)
+      return 'hh'
+    }
+    text.prototype.sayHi = function(name){
+      console.log(`Hi~ ${this.name}`);
+    }
+    let obj = {name:'zs'}    
+
+    console.log("------------------------------------")
+
+    let textbind = text.bind(obj);
+    textbind(1,2,3)
+    let ins2 = new textbind(1,2,3)
+    console.log(ins2 instanceof textbind)
+    ins2.sayHi()
+
+    let textbind2 = text.mybind(obj);
+    textbind2(1,2,3)
+    let ins3 = new textbind2(1,2,3) 
+    console.log(ins3 instanceof textbind2)
+    ins3.sayHi()
+    
+
+
+    
+  </script>
+  
+</body>
+</html>

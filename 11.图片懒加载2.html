@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>图片懒加载</title>
+  <style>
+    .imgWarp img {
+      display: block;
+      height: 500px;
+      margin-top: 20px;
+    }
+  </style>
+</head>
+<body>
+  <div class="imgWarp">
+    https://www.ruanyifeng.com/blog/2016/11/intersectionobserver_api.html
+    <img  src="./assets/loading.gif" data-src="./assets/5.jpg">
+    <img  src="./assets/loading.gif" data-src="./assets/5.jpg">
+    <img  src="./assets/loading.gif" data-src="./assets/5.jpg">
+    <img  src="./assets/loading.gif" data-src="./assets/5.jpg">
+    <img  src="./assets/loading.gif" data-src="./assets/5.jpg"> 
+    <img  src="./assets/loading.gif" data-src="./assets/5.jpg"> 
+    <img  src="./assets/loading.gif" data-src="./assets/5.jpg"> 
+  </div>
+
+  <script>
+    const images = document.querySelectorAll("img");
+    // IntersectionObserver接口 异步观察目标元素与根元素的交集
+    // 传给IntersectionObserver的回调函数 
+    // 在目标元素能看见时触发一次，目标元素看不见了时再触发一次
+    const observer = new IntersectionObserver(entries => {
+      entries.forEach(entry => {
+        // 判断目标元素是否当前可见
+        if (entry.isIntersecting) {
+          const image = entry.target;
+          image.setAttribute("src", image.getAttribute("data-src"));
+          // 图片被加载后取消观察
+          observer.unobserve(image);
+        }
+      });
+    },{
+        rootMargin: "0px 0px -200px 0px" // 交叉过视图的200，才开始派发事件
+      });
+    images.forEach(image => {
+      observer.observe(image);
+    });
+
+  </script>
+</body>
+</html>

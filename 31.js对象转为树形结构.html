@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>js对象转为树形结构</title>
+</head>
+<body>
+
+  <script>
+
+    const arr = [
+        { id: "01", name: "大大", pid: "" },
+        { id: "02", name: "小亮", pid: "01" },
+        { id: "03", name: "老王", pid: "" },
+        { id: "04", name: "小丽", pid: "02" },
+        { id: "05", name: "大光", pid: "03" },
+        { id: "06", name: "小高", pid: "05" },
+      ]
+
+    // 非递归方式
+    function transformTotree(data){
+      if(!Array.isArray(data)){
+        return data
+      }
+      let result = []
+      let map = {}
+      data.forEach(item => {
+        map[item.id] = item
+      })
+      data.forEach(item => {
+        let p = map[item.pid]
+        if(p) {
+          (p.children || (p.children = [])).push(item)
+        } else {
+          result.push(item)
+        }
+      })
+      console.log(map)
+      return result
+    }
+    console.log(transformTotree(arr))
+
+
+
+    function transformTotree2(data, pid = '') {
+      let treeList = []
+      treeList = data.filter(item => {
+        return item.pid === pid
+      })
+      treeList.forEach(item => {
+        item.children = transformTotree2(data, item.id)
+      });
+      return treeList
+  }
+
+  let result = transformTotree2(arr)
+  console.log(result);
+
+  </script>
+  
+</body>
+</html>

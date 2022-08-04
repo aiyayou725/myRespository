@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <style>
+    /* flex布局 */
+    .outer {
+      display: flex;
+      flex-direction: column;
+      width: 600px;
+      height: 100%;
+    }
+
+    .top, .down {
+      height: 100px;
+      background-color: #eee;
+    }
+    .center {
+      flex: 1;
+      background-color: rgb(244, 207, 207);
+      overflow: auto;
+    }
+  </style>
+</head>
+<body>
+  <div class="outer">
+    <div class="top">上</div>
+    <div class="center">
+     <p>6666666</p>
+     <p>6666666</p>
+     <p>6666666</p>
+     <p>6666666</p>
+     <p>6666666</p>
+     <p>6666666</p>
+     <p>6666666</p>
+     <p>6666666</p>
+     <p>6666666</p>
+    </div>
+    <div class="down">下</div>
+  </div>
+</body>
+</html>

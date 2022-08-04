@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>类数组对象转换为数组</title>
+</head>
+<body>
+  <div>111</div>
+  <div>111</div>
+  <div>111</div>
+  <div>111</div>
+  <script>
+    /**
+     * 类数组对象 —— 属性值为从0开始的递增索引，有length属性，但是不能使用数组的push等方法
+    **/
+
+let divs = document.querySelectorAll('div')
+console.log(divs);
+
+
+// 方法一: for in
+function translate(obj) {
+  let arr = [];
+  for (let i in obj) {
+    arr.push(obj[i])
+  }
+  return arr  
+}
+console.log(translate(divs));
+
+// 方法二: Object.keys获取键 / Object.values获取值
+let arrKeys = Object.keys(divs)
+let arrVals = Object.values(divs)
+console.log(arrKeys);
+console.log(arrVals);
+// 方法三: Array.from
+// 使用 Array.from 时，键必须是数值；必须带有 length 的键值对
+console.log(Array.from(divs));
+
+  </script>
+  
+</body>
+</html>

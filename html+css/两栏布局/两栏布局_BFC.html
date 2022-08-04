@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <style>
+    .left {
+      float: left;
+      width: 200px;
+      height: 300px;
+      background-color: rgb(244, 169, 169);
+    }
+    .right {
+      height: 400px;
+      background-color: rgb(197, 246, 137);
+      /* 右盒子设置了 overflow：hidden 右侧形成了BFC，BFC的区域不会与浮动元素发生重叠*/
+      overflow: hidden;
+    }
+  </style>
+</head>
+<body>
+  <div class="left">左边</div>
+  <div class="right">右边</div>
+</body>
+</html>

@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>promsie.any</title>
+</head>
+<body>
+  <script>
+    Promise.any2 = function(iterators) {
+      const promises = Array.from(iterators);
+      let len = promises.length;
+      if(len === 0) return new Promise((resolve, reject) => reject(new AggregateError([], "All promises were rejected")))
+      const errs = [];
+      return new Promise((resolve, reject) => {
+        promises.forEach(promise => {
+          Promise.resolve(promise)
+            .then(value => {
+            resolve(value)
+          }, err => {
+            errs.push(err);
+            if(--len === 0) {
+              reject(new AggregateError(errs, "All promises were rejected"))
+            }
+          })
+
+        })
+      })
+    }
+
+    let p1 = new Promise((resolve, reject) => {
+      setTimeout(reject, 200, 1)
+    })
+    let p2 = new Promise((resolve, reject) => reject(2))
+    let p3 = new Promise((resolve, reject) => {
+      setTimeout(resolve, 200, 1)
+    })
+    let p4 = 3;
+
+    console.log(Promise.any([p1, p2]))
+    console.log(Promise.any([p1, p2, p3]))
+    console.log(Promise.any([p1, p2, p3, p4]))
+    console.log(Promise.any([]))
+    console.log("----------------")
+    console.log(Promise.any2([p1, p2]))
+    console.log(Promise.any2([p1, p2, p3]))
+    console.log(Promise.any2([p1, p2, p3, p4]))
+    console.log(Promise.any2([]))
+  </script>
+  
+</body>
+</html>

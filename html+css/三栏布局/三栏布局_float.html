@@ -1,0 +1,49 @@
+<!-- 三栏布局，左右宽度固定，中间自适应 -->
+
+<!-- 当一个浮动元素脱离文档流后遇到父容器或者另一个浮动盒子容器时，然后浮动停止
+  因此要把右盒子设置在center之后，这样他才会遇到父盒子的有边界停止浮动 -->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <style>
+    .box {
+      height: 100px;
+    }
+    .left, .right {
+      width: 200px;
+      height: 100px;
+      background-color: rgb(240, 128, 128);
+    }
+    .left {
+      float: left;
+    }
+    .right {
+      float: right;
+    }
+    .center {
+      /* 这里是把中间盒子设置为 BFC 可以不受外面元素的影响*/
+      /* 也可以写成 margin：0 200px; 但总是需要其他两个盒子的宽度 */
+      overflow: hidden;
+      height: 100px;
+      background-color: rgb(145, 123, 230);
+    }
+
+
+  </style>
+</head>
+<body>
+  <div class="box">
+    <div class="left">left</div>
+    <div class="right">right</div>
+    <div class="center">center</div>
+    
+    
+  </div>
+  
+</body>
+</html>

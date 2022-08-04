@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Promise实现sleep</title>
+</head>
+<body>
+  <script>
+    function sleepPromise (time){
+      return new Promise(resolve => {
+        setTimeout(resolve, time)
+      })
+    }
+
+    // 使用睡眠函数实现红绿灯代码，红灯2秒，黄灯1秒，绿灯3秒，循环改变颜色。
+    // 一开始是红灯，两秒后变为黄灯，再过一秒变绿灯，绿灯持续3秒变红灯...
+    function changeColor (delay, color) {
+      return new Promise(resolve => {
+        console.log(`现在是${color}`);
+        sleepPromise(delay).then(resolve)
+      })
+    }
+
+    function main() {
+      return new Promise(resolve => {
+        changeColor(2000, '红灯')
+        .then(()=>changeColor(1000, '黄灯'))
+        .then(()=>changeColor(3000, '绿灯'))
+        .then(() => main())
+      })
+    }
+    main()
+
+    // let fun = () => console.log('time out');
+    // let sleep2= (time)=> new Promise((resolve)=>{
+    //   setTimeout(resolve,time)
+    // })
+    // sleep2(2000).then(fun);
+
+
+  </script>
+  
+</body>
+</html>

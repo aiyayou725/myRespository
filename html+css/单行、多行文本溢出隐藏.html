@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <style>
+    .box1, .box2 {
+        width: 150px;
+        height: 40px;
+        background-color: pink;
+    }
+    /* 单行文本溢出隐藏 */
+    .singleLine {
+        overflow: hidden;          /* 溢出隐藏 */
+        text-overflow: ellipsis;   /* 溢出用省略号显示 */
+        white-space: nowrap;       /* 段落中文本不换行*/
+    }
+    /* 多行文本溢出隐藏 */
+    .multiLine {
+        overflow: hidden;                      /* 溢出隐藏 */
+        text-overflow: ellipsis;               /* 溢出用省略号显示 */
+        display: -webkit-box;                  /* 作为弹性伸缩盒子模型显示 */
+        -webkit-box-orient: vertical;          /* 设置伸缩盒子的子元素排列方式：从上到下垂直排列 */
+        -webkit-line-clamp: 2;                 /* 显示的行数 */
+    }
+
+  </style>
+</head>
+<body>
+    <div class="box1">
+        <p class="singleLine">我想吃西红柿炒鸡蛋和火锅</p>
+    </div> 
+    <div class="box2">
+        <p class="multiLine">我想吃西红柿炒鸡蛋，糖醋排骨，和火锅</p>
+    </div>
+</body>
+</html>

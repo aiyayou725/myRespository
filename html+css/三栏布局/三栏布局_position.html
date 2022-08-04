@@ -1,0 +1,42 @@
+<!-- 三栏布局一般是左右两栏宽度固定，中间自适应 -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <style>
+    .box {
+      position: relative;
+    }
+    .left {
+      position: absolute;
+      width: 200px;
+      height: 300px;
+      background-color: rgb(253, 122, 122);
+    }
+    .right {
+      position: absolute;
+      top: 0;
+      right: 0;
+      width: 200px;
+      height: 300px;
+      background-color: rgb(176, 240, 133);
+    }
+    .center {
+      margin: 0 200px;
+      height: 400px;
+      background-color: rgb(133, 166, 237);
+    }
+  </style>
+</head>
+<body>
+  <div class="box">
+    <div class="left"></div>
+    <div class="center"></div>
+    <div class="right"></div>
+  </div>
+  
+</body>
+</html>

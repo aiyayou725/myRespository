@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <script>
+    // 方法一： 创建一个URLSearchParams实例
+    // URLSearchParams 不会解析URL
+const urlSearchParams = new URLSearchParams("https://www.baidu.com?user=zs&age=18")
+console.log(urlSearchParams)
+// Object.fromEntires 把键值对列表转换为一个对象
+// Object.entries 返回给定对象自身可枚举属性的键值对数组
+const params = Object.fromEntries(urlSearchParams.entries())
+console.log(params)
+
+
+// 方法二：
+function getParams(url) {
+  const res = {}
+  if (url.includes('?')) {
+    const str = url.split('?')[1]
+    const arr = str.split('&')
+    arr.forEach(item => {
+      const key = item.split('=')[0]
+      const val = item.split('=')[1]
+      res[key] = decodeURIComponent(val)
+    })
+  }
+  return res
+}
+const user = getParams("https://jf98y0i883.feishu.cn/base/appcnGuMhCDR0Bp5wLWvehGNomg?table=tblJFtIxH4ZzA8Bv&view=vewKOGGWHd")
+console.log(user)
+
+
+  </script>
+</body>
+</html>

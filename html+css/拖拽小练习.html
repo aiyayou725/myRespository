@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+<meta charset="UTF-8">
+<title></title>
+
+<style>
+    #tuo{
+        background: #e54d26;
+        width: 200px;
+        height: 200px;
+    }
+    #target{
+        width: 200px;
+        height: 200px;
+        border: 2px solid #D2D2D2;
+        box-shadow: 1px 4px 8px #646464;
+    }
+    #box {
+      width: 200px;
+      height: 200px;
+      background-color: rgb(248, 131, 131);
+    }
+</style>
+</head>
+<body>
+  <!-- drop 事件主体是目标元素，在目标元素完全接收被拖放元素时触发，也就是将被拖动的元素放进来，然后松手的时候触发 -->
+  <!-- drop 事件发生，说明要拖动的元素已经完全进入目标位置，所以此时要把放进来的元素作为目标位置的子元素 -->
+    <div  id="target" ondrop="drop(event)" ondragover="allowDrop(event)"></div>
+     <br/>
+   <img src="../assets/pic1.jpg" id="tuo" draggable="true" ondragstart="drag(event)"  width="500" height="280" / >
+
+   <script>
+
+    //  dataTransfer 对象可于源对象和目标对象中使用。（也就是说标识被拖拽的元素用来的目标位置匹配）
+    // 典型用法是，setData 方法用于源事件，以便提供关于将要进行传送的数据的数据。
+    // 相应的，getData 方法用于目标事件以便确保获取的数据和数据格式。
+     function drop(ev) {
+        //不执行默认处理（拒绝被拖放）
+        console.log('进来了');
+        ev.preventDefault();
+        //使用getData()获取到数据，然后赋值给data
+        var data=ev.dataTransfer.getData("Text");
+        //使用appendChild方法把拖动的节点放到元素节点中成为他的子节点
+        ev.target.appendChild(document.getElementById(data));
+    }
+
+    //  dataTransfer.dropEffect 设置或获取拖曳操作的类型和要显示的光标类型。
+    function allowDrop(ev) {
+        //不执行默认处理（拒绝被拖放）
+        ev.preventDefault();
+        ev.dataTransfer.dropEffect = 'link'
+    }
+
+    function drag(ev) {
+   //   使用setData(数据类型，携带的数据)
+   //   方法将要拖放的数据存入dataTransfer对象
+   //   ev.clearData();
+        ev.dataTransfer.setData("Text",ev.target.id);
+    }
+
+    
+</script>
+</body>
+</html>

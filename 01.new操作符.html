@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>重写new</title>
+</head>
+<body>
+  <script>
+    // new 操作符可以执行一个自定义的构造函数或内置对象的构造函数，生成其实例
+    // new 操作符干了什么
+    // 1.在内存中创建了一个新对象
+    // 2.让新对象的__proto__指向构造函数的prototype
+    // 3.让构造函数的 this 指向新对象
+    // 4.执行构造函数中的代码
+    // 5.返回这个新对象
+    function fakeNew() {
+      // 创造一个新对象obj
+      let obj = {}
+    
+      // arguments 是一个伪数组，不能直接使用数组的方法，因此使用 apply 使类数组可以使用数组的 shift 方法
+      // 删除 arguments 中的第一项，并将其赋值给 constructor
+      // 意思应该是获取这个构造函数
+      let constructor = Array.prototype.shift.call(arguments)
+
+      // 让新对象的__proto__指向构造函数的 prototype
+      obj.__proto__ = constructor.prototype
+
+      // 将构造函数的 this 指向新对象
+      let ret = constructor.apply(obj, arguments)
+      // constructor.apply(obj, arguments)
+      // return obj
+
+      // 返回这个新对象
+      // 如果构造函数有返回值，且返回值是引用类型，则直接返回其返回值； 
+      // 若构造函数没有返回值，或者返回值为基本数据类型，则发返回这个新对象
+      return typeof ret === 'object' && ret !== null ? ret : obj
+    }
+
+    function Person(name, age) {
+      this.name = name;
+      this.age = age;
+    }
+    Person.prototype.sayHi = function() {
+      console.log(`Hi~ ${this.name}`);
+    }
+
+    let zs = new Person('张三', 20)
+    console.log(zs.name, zs.age);
+    zs.sayHi()
+    console.log(zs);
+
+    let ls = fakeNew(Person, '李四', 18)
+    console.log(ls.name, ls.age);
+    console.log(ls);
+    ls.sayHi()
+
+
+    function Car() {
+      this.make = 'lanbojini'
+      return { make: 'masaladi' }
+    }
+    const myCar1 = new Car()
+    const myCar2 = fakeNew(Car)
+    console.log(myCar1.make);
+    console.log(myCar2.make);
+  </script>
+</body>
+</html>

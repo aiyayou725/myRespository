@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <script>
+    const createPromise = function(time){
+      return () => {
+        return new Promise((resolve,reject) => {
+          setTimeout(() => {
+            console.log(`time${time}`);
+            resolve()
+          }, time*1000)
+        })
+      }
+    }
+    const promiseArr = [createPromise(1), createPromise(2), createPromise(8)];
+
+    // promsise then 
+    function serpromise(arr) {
+      arr.reduce((pre,cur) => {
+        return pre.then(cur);
+      }, Promise.resolve())
+    }
+  </script>
+  
+</body>
+</html>

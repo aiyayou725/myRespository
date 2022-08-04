@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>进度条</title>
+
+</head>
+<body>
+  <div id="test" style="width: 0px; height: 14px; line-height: 14px; background-color: aqua;">0%</div>
+  <script>
+    let test = document.getElementById('test');
+    // setInterval 实现
+    // test.onclick = function(){
+    //   let timer = setInterval(function(){
+    //     if(parseInt(test.style.width) < 300) {
+    //       test.style.width = parseInt(test.style.width)+3+'px';
+    //       test.innerHTML = parseInt(test.style.width)/3+'%';
+    //     } else {
+    //       clearInterval(timer)
+    //     }
+    //   }, 17)
+    // }
+
+
+    // setTimeOut 实现
+    // test.onclick = function(){
+    //   let timer = setTimeout(function fn(){
+    //     if(parseInt(test.style.width) < 300) {
+    //       test.style.width = parseInt(test.style.width)+3+'px';
+    //       test.innerHTML = parseInt(test.style.width)/3+'%';
+    //       timer = setTimeout(fn, 17)
+    //     } else {
+    //       clearTimeout(timer)
+    //     }
+    //   }, 17)
+    // }
+
+    // requestAnimationFrame 实现
+    test.onclick = function(){
+      let timer = requestAnimationFrame(function fn(){
+        if(parseInt(test.style.width) < 300) {
+          test.style.width = parseInt(test.style.width)+3+'px';
+          test.innerHTML = parseInt(test.style.width)/3+'%';
+          timer = requestAnimationFrame(fn)
+        } else {
+         cancelAnimationFrame(timer)
+        }
+      })
+    }
+
+  </script>
+</body>
+
+</html>

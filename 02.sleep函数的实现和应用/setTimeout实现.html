@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>setTimeout实现slee</title>
+</head>
+<body>
+  <script>
+    // sleep 过一段时间再执行
+    function sleepSetTimeout(fn, delay){
+      setTimeout(()=>{
+        fn()
+      }, delay)
+    }
+
+    function func() {
+      console.log(7);
+    }
+    sleepSetTimeout(func, 2000)
+
+    // 实现红绿灯代码，红灯2秒，黄灯1秒，绿灯3秒，循环改变颜色
+    function changeColor(){
+      console.log('red')
+      setTimeout(()=>{
+        console.log('yellow');
+        setTimeout(()=>{
+          console.log('green');
+          setTimeout(()=> changeColor(), 3000)
+        },1000)
+      },2000)
+    }
+    changeColor()
+  </script>
+  
+</body>
+</html>

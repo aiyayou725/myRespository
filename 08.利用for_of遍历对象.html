@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  
+  <script>
+    // 对象没有[symbol.iterator]属性，因此不可以使用for...of遍历
+
+    // 如果想使用for...of遍历对象，有两种方法
+
+    // 方法一：将对象转化为数组
+    let obj = {
+      0: "one",
+      1: "two",
+      length: 2
+    }
+    obj = Array.from(obj);
+    for (let k of obj) {
+      console.log(k);
+    }
+
+    console.log("----------------------")
+
+     // 方法二：为对象添加[symbol.iterator]方法
+     let obj2 = {
+      0: "one",
+      1: "two",
+      2: "three",
+    }
+    obj2[Symbol.iterator] = function() {
+      let keys = Object.keys(this)
+      let count = 0;
+      return {
+        next() {
+          if(count < keys.length) {
+            return { value: obj2[keys[count++]], done: false }
+          } else {
+            return { value: undefined, done: true }
+          }
+        }
+      }
+    }
+    for (let k of obj2) {
+      console.log(k);
+    }
+
+    console.log("=================================")
+
+    // 方法二扩展：用生成器函数来写迭代器
+    let obj3 = {
+      0: "one",
+      1: "two",
+      2: "three",
+      3: "four",
+    }
+    obj3[Symbol.iterator] = function* () {
+      let keys = Object.keys(this)
+      let count = 0;
+      while(count < keys.length) {
+        yield this[keys[count++]]
+      } 
+    }
+    for (let k of obj3) {
+      console.log(k);
+    }
+  </script>
+</body>
+</html>

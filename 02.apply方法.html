@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <script>
+    // this 是执行上下文中的一个属性，他指向最后一次调用这个方法的对象
+    // this 的指向可以通过四种调用模式判断
+    // 1.函数调用模式，this 指向全局对象
+    // 2.方法调用模式，函数作为对象的方法来调用时，this 指向这个对象
+    // 3.构造器调用模式，一个函数用 new 调用时，函数执行前会创建一个新对象，this 指向这个新对象
+    // 4.apply / call / bind 模式，可以指定调用函数时的 this 指向
+
+    // 写出函数原型上的 apply 方法
+    // (apply 有两个参数，一个是指定的函数调用时的this，另一个是传入函数的参数，以类数组或数组的形式传入)
+    Function.prototype.myapply = function (thisArg, argsArr) {
+      // 如果调用该方法的不是一个函数就抛出一个错误
+      // if (typeof this !== 'function') {
+      //   throw new TypeError("Function.prototype.apply was called on which is not a function")
+      // }
+      // 如果传入的 this 为 undefined 或 null 就使this指向全局e
+      if (thisArg === undefined || thisArg === null) {
+        thisArg = window
+      } else {
+        // 这个方法的本质就是把调用的这个函数复制成一个对象的方法，这个对象由 this 封装来，这样调用对象的方法时，this自然会指向这个对象
+        thisArg = Object(thisArg)
+      }
+      // 防止this封装的对象有重名方法
+      const func = Symbol('func')
+      // 让封装的对象指向当前调用的方法
+      thisArg[func] = this
+
+      let result
+      // 看看是否传入了数组类型的参数
+      if (argsArr && typeof argsArr === 'object' && 'length' in argsArr) {
+        // 如果 argsArr 是一个类数组对象，直接使用扩展运算符可能会报错，因此要先转换为数组
+        result = thisArg[func](...Array.from(argsArr))
+        // 没有参数传入就直接执行
+        } else if (argsArr === undefined || argsArr === null) {
+          result = thisArg[func]()
+        } else {
+          throw new TypeError('传入参数类型错误')
+        }
+      // 执行完毕后删除这个方法
+        delete thisArg[func]
+        return result
+      }
+
+    function text (a,b,c) {
+      let value = 2
+      console.log(a,b,c)
+      console.log(this.value);
+    }
+
+    let obj = {value: 30}
+    console.log(text.apply(obj, [1,2,3]));
+    console.log(text.myapply(obj, [1,2,3]));
+   
+  </script>
+</body>
+</html>
+

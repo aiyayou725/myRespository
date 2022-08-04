@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>promise.finally</title>
+</head>
+<body>
+  <script>
+    /**
+     finally() 方法返回一个 Promise。在 promise 结束时，无论结果是 fulfilled 或者是 rejected，都会执行指定的回调函数。
+     这避免了同样的语句需要在 then() 和 catch() 中各写一次的情况。
+    **/
+    Promise.prototype.myFinally = function (callback) {
+      return this.then(
+        value  => Promise.resolve(callback()).then(() => value),
+        reason => Promise.resolve(callback()).then(() => { throw reason })
+      );
+    };
+
+
+    console.log(Promise.resolve(2).then(() => {}, () => {}));
+    console.log('finally', Promise.resolve(2).finally(() => {}));
+    console.log('myFinally',Promise.resolve(2).myFinally(() => {}));
+    console.log(Promise.reject(3).then(() => {}, () => {}));
+    // console.log('finally', Promise.reject(3).finally(() => {}));
+    // console.log('myFinally',Promise.reject(3).myFinally(() => {}));
+
+    let isLoaded = true
+    let p = new Promise((resolve, reject) => {
+      if(isLoaded) {
+        resolve('已加载成功')
+      } 
+      reject('加载失败')
+    })
+
+    p.finally(console.log('开始加载了'))
+    p.myFinally(console.log('开始加载了'))
+  </script>
+  
+</body>
+</html>

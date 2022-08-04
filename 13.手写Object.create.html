@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>object.create</title>
+</head>
+<body>
+  <script>
+    /**
+     * Object.create(proto，[propertiesObject])
+        * proto —— 新创建对象的原型对象。
+        * propertiesObject —— 可选。需要传入一个对象，该对象的属性类型参照Object.defineProperties()的第二个参数。
+          如果该参数被指定且不为 undefined，该传入对象的自有可枚举属性 (即其自身定义的属性，而不是其原型链上的枚举属性) 
+          将为新创建的对象添加指定的属性值和对应的属性描述符。
+        * 返回值 —— 一个新对象，带着指定的原型对象和属性。
+        如果proto参数不是 null 或非原始包装对象，则抛出一个 TypeError 异常。
+    **/
+Object.create1 = function (proto, propertyObject = undefined) {
+  if (typeof proto !== "object" && typeof proto !== "function") {
+    throw TypeError('对象的原型对象只能是Object或 null')
+  }
+  function Fn() { }
+  Fn.prototype = proto
+  const obj = new Fn()
+  if (propertyObject !== undefined) {
+    Object.defineProperties(obj, propertyObject)
+  }
+  return obj
+}
+
+
+const person = { 
+  isHuman: false,
+  printIntroduction: function() {
+    console.log('My name is ${this.name} .Am I human ? ${this.isHuman}');
+  }
+}
+const me = Object.create1(person);
+const me2 = Object.create(person);
+console.log(me2.isHuman);
+console.log(me2.__proto__);
+console.log(me2.__proto__ === person);
+
+console.log('------------------------------------------------------------');
+
+console.log(me.isHuman);
+console.log(me.__proto__);
+console.log(me.__proto__ === person);
+
+  </script>
+  
+</body>
+</html>

@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+    .column {
+      float: left;
+      width: 25%;
+    }
+  @media screen and (max-width: 992px) {
+  .column {
+    width: 50%;
+  }
+}
+
+/* 在宽度小于或等于 600px 的屏幕上，使列堆叠在一起，而不是彼此相邻 */
+@media screen and (max-width: 600px) {
+  .column {
+    width: 100%;
+  }
+}
+    
+  </style>
+</head>
+<body>
+  <div class="content">
+    <div class="column" style="background-color: rgb(125, 134, 188);">
+      <div class="box1">
+        <p>box1</p>
+      </div>
+    </div>
+    <div class="column" style="background-color: rgb(232, 142, 238);">
+      <div class="box2">
+        <p>box1</p>
+      </div>
+    </div>
+    <div class="column" style="background-color: rgb(177, 188, 125);">
+      <div class="box3">
+        <p>box1</p>
+      </div>
+    </div>
+    <div class="column" style="background-color: rgb(188, 125, 125);">
+      <div class="box4">
+        <p>box1</p>
+      </div>
+    </div>
+  </div>
+  
+</body>
+</html>

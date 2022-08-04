@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <style>
+    .box {
+      height: 100px;
+    }
+  .left {
+    float: left;
+    width: 200px;
+    height: 100%;
+    background-color: rgb(236, 155, 155);
+  }
+  .right {
+    height: 200%;
+    /* 如果没有 margin-left 左盒子是压在右盒子上面的*/
+    margin-left: 200px;   
+    background-color: rgb(167, 179, 246);
+  }
+  </style>
+</head>
+<body>
+  <div class="box">
+    <div class="left">左边</div>
+    <div class="right">右边</div>
+  </div>
+</body>
+</html>

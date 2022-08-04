@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>图片懒加载</title>
+  <style>
+    img {
+      display: block;
+      margin-top: 20px;
+      height: 400px;
+    }
+  </style>
+</head>
+<body>
+  <div>
+    <img src="./assets/loading.gif" data-src="./assets/5.jpg">
+    <img src="./assets/loading.gif" data-src="./assets/5.jpg">
+    <img src="./assets/loading.gif" data-src="./assets/5.jpg">
+    <img src="./assets/loading.gif" data-src="./assets/5.jpg">
+    <img src="./assets/loading.gif" data-src="./assets/5.jpg">
+    <img src="./assets/loading.gif" data-src="./assets/5.jpg">
+    <img src="./assets/loading.gif" data-src="./assets/5.jpg">
+    <img src="./assets/loading.gif" data-src="./assets/5.jpg">
+    <img src="./assets/loading.gif" data-src="./assets/5.jpg">
+    <img src="./assets/loading.gif" data-src="./assets/5.jpg">
+    <img src="./assets/loading.gif" data-src="./assets/5.jpg">
+    <img src="./assets/loading.gif" data-src="./assets/5.jpg">
+  </div>
+
+  <script>
+    // 用来避免重复给 img 赋值
+    const imgs = document.querySelectorAll('img');
+    function lazyLoad(){
+      // 获得可视区域的高度
+      const clientHeight = document.body.clientHeight;
+      // 获得滚动区域的高度
+      const scrollTop = document.documentElement.scrollTop;
+      for(let i=0; i<imgs.length; i++) {
+        if (imgs[i].offsetTop < clientHeight + scrollTop) {
+          imgs[i].src = imgs[i].getAttribute('data-src')
+        }
+      }
+    }
+
+        // 节流
+    function throttle (fn, wait=1000) {
+      let prev = 0
+      return function(){
+        let args = arguments
+        let now = Date.now()
+
+        if(now-prev >= wait) {
+          fn.apply(this,args)
+          prev = now
+        } 
+      }
+    }
+
+    // 第一屏图需要一进来就加载
+    lazyLoad()
+    window.onscroll = throttle(lazyLoad)
+  </script>
+  
+</body>
+</html>

@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>v-model原理</title>
+</head>
+<body>
+  <input type="text" placeholder="请输入用户名" id="username">
+  显示值:<span id="uame"></span>
+  <script>
+    let obj = {}
+    Object.defineProperty(obj, 'username',{
+      get: function(){
+        console.log('获取用户名');
+      },
+      set: function(val){
+        console.log('设置用户名');
+        document.getElementById('uame').innerText = val
+      }
+    })
+    document.getElementById('username').addEventListener('keyup', function(e){
+      obj.username = e.target.value
+    })
+  </script>
+</body>
+</html>

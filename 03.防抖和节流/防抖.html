@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>防抖</title>
+</head>
+<body>
+  <input type="text" />
+  <button type="submit" id="btn">提交</button>
+  <script>
+    let btn = document.getElementById('btn')
+    btn.addEventListener('click', debounce4(submit, 3000))
+    function submit(){
+      console.log(1);
+    }
+    // 防抖 —— 回城 在一个时间段内连续多次触发，只有最后一次触发才生效
+    // 第一次触发立即生效
+    function debounce(func, immediate = false, wait = 1000){
+      let timer = null;
+      let isInvoke = false;  // 是否执行过
+
+      const _debounce = function(...args) {
+        if(timer) {
+          clearTimeout(timer)
+        }
+        // 判断是否需要立即执行
+        if(immediate && !isInvoke) {
+          func.apply(this, args)
+          isInvoke = true;
+        } else {
+          timer = setTimeout(() => {
+            func.apply(this, args)
+            isInvoke = false;
+          }, wait)  
+        }
+      }
+      return _debounce
+    }
+
+
+    // 最基本的防抖
+    function debounce1(func, wait=500){
+      let timer = null;
+      return function(...args) {
+        let context = this;
+        clearTimeout(timer);
+        timer = setTimeout(()=>{
+          func.apply(context, args)
+        }, wait)
+      }
+    }
+
+function debounce4(func, wait, option = {leading: false, trailing: true}) {
+  // your code here
+  let timer = null;
+  let hasStarted = false;
+  const { leading , trailing } = option || {};
+  return function(...args){
+    const that = this;
+    if(leading && !timer && !hasStarted) {
+      func.apply(that, args);
+      hasStarted = true;
+      return;
+    }
+    clearTimeout(timer);
+    timer = setTimeout(()=>{
+      hasStarted = false;
+      timer = null;
+      if(trailing) func.apply(that, args);
+    }, wait)
+  }
+}
+
+  </script>
+  
+</body>
+</html>

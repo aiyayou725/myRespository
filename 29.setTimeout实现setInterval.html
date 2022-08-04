@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <style>
+  </style>
+</head>
+<body>
+  <script>
+    // 版本一： 不能实现清除定时器的功能
+    // const mySetInterval =(cb, time) => {
+    //   const fn = () => {
+    //     cb();
+    //     setTimeout(() => {
+    //       fn()
+    //     }, time)
+    //   }
+    //   setTimeout(fn, time)
+    // }
+
+    // mySetInterval(() => console.log(111), 1000)
+
+    // 版本二：有清除功能，但全局只有一个定时器
+    // let timer
+    // const mySetInterval = (cb, time) => {
+    //   const fn = () => {
+    //     cb()
+    //     timer = setTimeout(() => {
+    //       fn()
+    //     }, time)
+    //   }
+    //   timer = setTimeout(fn, time)
+    //   return timer
+    // }
+
+
+
+    // 版本三：可以设置多个定时器
+    const timerMap = {}
+    let id = 0
+    const mySetInterval = (cb, time) => {
+      let timerId = id;
+      id++          // id自增实现id唯一
+      const fn = () => {
+        cb();
+        timerMap[timerId] = setTimeout(() => {
+          fn();
+        }, time)
+      }
+      timerMap[timerId] = setTimeout(fn, time)
+      return timerId
+    }
+
+    // 清除定时器
+    const myClearInterval = (id) => {
+      clearTimeout(timerMap[id])
+      delete timerMap[id]
+    }
+
+    let t = mySetInterval(() => console.log(11111), 1000)
+
+    setTimeout(() => {
+      myClearInterval(t)
+    }, 6000)
+
+  </script>
+</body>
+</html>
+
+
+
